@@ -24,25 +24,9 @@ public class SlimePATROL : SlimeFSMState
 	void Update () {
         elapsedMoveTime += Time.deltaTime;
 
-        Vector3 deltaMove = Vector3.MoveTowards(
-            transform.position,
-            destination,
-            Time.deltaTime * manager.moveSpeed) - transform.position;
-
-        deltaMove.y = -manager.fallSpeed * Time.deltaTime;
-
-        manager.cc.Move(deltaMove);
-
-        Vector3 dir = (destination - transform.position).normalized;
-        dir.y = 0;
-        if (dir != Vector3.zero)
-        {
-            transform.rotation = Quaternion.RotateTowards(
-                transform.rotation,
-                Quaternion.LookRotation(dir),
-                manager.rotateSpeed * Time.deltaTime
-                );
-        }
+        CKUtil.CKMove(manager.cc, transform,
+            destination, manager.moveSpeed,
+            manager.rotateSpeed, manager.fallSpeed);    
 
         Vector3 diff = destination - transform.position;
         diff.y = 0;

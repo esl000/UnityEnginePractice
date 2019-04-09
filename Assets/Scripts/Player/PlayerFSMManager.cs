@@ -16,23 +16,32 @@ public class PlayerFSMManager : MonoBehaviour
     public PlayerState currentState;
     public PlayerState startState;
     public Transform marker;
+    public Transform attackMarker;
+    public Transform target;
     public CharacterController cc;
-    public Animation anim;
+    public Animator anim;
     public float moveSpeed;
     public float rotateSpeed;
     public float fallSpeed;
+    public float attackRange;
 
     Dictionary<PlayerState, PlayerFSMState> states = new Dictionary<PlayerState, PlayerFSMState>();
 
+    public int layerMask;
+
     private void Awake()
     {
+        layerMask = (1 << 9) | (1 << 10);
         marker = GameObject.FindGameObjectWithTag("Marker").transform;
+        attackMarker = GameObject.FindGameObjectWithTag("AttackMarker").transform;
         cc = GetComponent<CharacterController>();
 
         states.Add(PlayerState.IDLE, GetComponent<PlayerIDLE>());
         states.Add(PlayerState.RUN, GetComponent<PlayerRUN>());
+        states.Add(PlayerState.CHASE, GetComponent<PlayerCHASE>());
+        states.Add(PlayerState.ATTACK, GetComponent<PlayerATTACK>());
 
-        anim = GetComponentInChildren<Animation>();
+        anim = GetComponentInChildren<Animator>();
         //moveSpeed = 3;
     }
 
@@ -59,10 +68,20 @@ public class PlayerFSMManager : MonoBehaviour
         {
             Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if(Physics.Raycast(r, out hit, 1000))
+            if (Physics.Raycast(r, out hit, 1000, layerMask))
             {
-                marker.position = hit.point;
-                SetState(PlayerState.RUN);
+                if (hit.transform.gameObject.layer == 9)
+                {
+                    marker.position = hit.point;
+                    SetState(PlayerState.RUN);
+                }
+                else if (hit.transform.gameObject.layer == 10)
+                {
+                    target = hit.transform;
+                    attackMarker.parent = hit.transform;
+                    attackMarker.transform.localPosition = Vector3.zero;
+                    SetState(PlayerState.CHASE);
+                }
             }
         }
         

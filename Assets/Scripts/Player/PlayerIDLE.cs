@@ -7,8 +7,8 @@ public class PlayerIDLE : PlayerFSMState
     public override void BeginState()
     {
         base.BeginState();
-        manager.anim.CrossFade("KK_Idle");
-        //manager.marker.gameObject.SetActive(true);
+        //manager.anim.CrossFade("KK_Idle");
+        manager.attackMarker.gameObject.SetActive(false);
     }
 
 
