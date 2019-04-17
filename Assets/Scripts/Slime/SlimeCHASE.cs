@@ -2,16 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCHASE : PlayerFSMState
+public class SlimeCHASE : SlimeFSMState
 {
-
-    public override void BeginState()
-    {
-        base.BeginState();
-        manager.marker.gameObject.SetActive(false);
-        manager.attackMarker.gameObject.SetActive(true);
-
-    }
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +21,7 @@ public class PlayerCHASE : PlayerFSMState
         diff.y = 0;
         if (diff.sqrMagnitude < manager.attackRange * manager.attackRange)
         {
-            manager.SetState(PlayerState.ATTACK);
+            manager.SetState(SlimeState.ATTACK);
             return;
         }
     }

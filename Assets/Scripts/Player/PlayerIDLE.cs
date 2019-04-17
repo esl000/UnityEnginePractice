@@ -19,6 +19,5 @@ public class PlayerIDLE : PlayerFSMState
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 }

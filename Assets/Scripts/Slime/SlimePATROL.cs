@@ -12,7 +12,6 @@ public class SlimePATROL : SlimeFSMState
         base.BeginState();
         destination = new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(-10f, 10f));
         elapsedMoveTime = 0f;
-        manager.anim.CrossFade("SL_Run");
     }
 
     // Use this for initialization
@@ -22,6 +21,12 @@ public class SlimePATROL : SlimeFSMState
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (CKUtil.Detect(manager.sight, 1f, manager.playerCC))
+        {
+
+        }
+
         elapsedMoveTime += Time.deltaTime;
 
         CKUtil.CKMove(manager.cc, transform,

@@ -11,7 +11,6 @@ public class SlimeIDLE : SlimeFSMState {
     {
         base.BeginState();
         elapsedTime = 0f;
-        manager.anim.CrossFade("SL_Idle");
     }
 
     // Use this for initialization
@@ -21,7 +20,13 @@ public class SlimeIDLE : SlimeFSMState {
 	
 	// Update is called once per frame
 	void Update () {
+        if(CKUtil.Detect(manager.sight, 1f, manager.playerCC))
+        {
+
+        }
+
         elapsedTime += Time.deltaTime;
+
         if(elapsedTime > patrolTime)
         {
             manager.SetState(SlimeState.PATROL);

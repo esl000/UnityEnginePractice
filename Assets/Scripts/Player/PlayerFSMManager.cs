@@ -60,6 +60,7 @@ public class PlayerFSMManager : MonoBehaviour
         states[newState].enabled = true;
         states[newState].BeginState();
         currentState = newState;
+        anim.SetInteger("CurrentState", (int)currentState);
     }
 
     private void Update()
@@ -84,6 +85,11 @@ public class PlayerFSMManager : MonoBehaviour
                 }
             }
         }
+        
+    }
+
+    public void AttackCheck()
+    {
         
     }
 

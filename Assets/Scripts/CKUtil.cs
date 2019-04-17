@@ -4,6 +4,13 @@ using UnityEngine;
 
 public static class CKUtil
 {
+    public static bool Detect(Camera sight, float aspect, CharacterController cc)
+    {
+        sight.aspect = aspect;
+        Plane[] ps = GeometryUtility.CalculateFrustumPlanes(sight);
+        return GeometryUtility.TestPlanesAABB(ps, cc.bounds);
+    }
+
     public static void CKMove(CharacterController cc,
         Transform self,
         Vector3 targetPos,
